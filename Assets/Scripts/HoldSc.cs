@@ -92,8 +92,8 @@ public class HoldSc : MonoBehaviour
             return;
 
             pickupObj = pickedUpObj;
-            pickupObj.GetComponent<BoxCollider>().isTrigger = true;
-            pickupObj.GetComponent<Rigidbody>().isKinematic = true;
+            pickupObj.GetComponent<Collider>().isTrigger = true;
+        pickupObj.GetComponent<Rigidbody>().isKinematic = true;
             // pickupObj.transform.SetParent(player);
             pickupObj.GetComponent<Rigidbody>().useGravity = false;
             pickupObj.transform.localRotation = transform.rotation;
@@ -113,7 +113,7 @@ public class HoldSc : MonoBehaviour
         pickupObj.GetComponent<Rigidbody>().useGravity = true;
         pickupObj.GetComponent<Rigidbody>().isKinematic = false;
         pickupObj.GetComponent<Rigidbody>().velocity = transform.forward * throwSpeed;
-        pickupObj.GetComponent<BoxCollider>().isTrigger = false;
+        pickupObj.GetComponent<Collider>().isTrigger = false;
         pickupObj = null;
         //player.GetChild(1).parent = null;
         canHold = true;

@@ -6,9 +6,12 @@ public class RigidbodyVelocity : MonoBehaviour
 {
     Rigidbody myRigidbody;
     Vector3 inputVector;
+    Vector3 startPos;
     // Use this for initialization
     void Start()
     {
+        startPos = new Vector3(1.45f, 1.24f, 29.45f);
+        transform.position = startPos;
         myRigidbody = GetComponent<Rigidbody>();
     }
 

@@ -6,9 +6,13 @@ public class MouseLook : MonoBehaviour {
 
     public float mouseSensitivity = 150f;
     float verticalLookAngle = 0f;
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void Start()
+    {
+        FadeIn(1f);
+    }
+    // Update is called once per frame
+    void Update () {
         float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * mouseSensitivity;
         float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * mouseSensitivity;
 
@@ -34,4 +38,9 @@ public class MouseLook : MonoBehaviour {
             Cursor.lockState = CursorLockMode.Locked; //locks mouse in center of screen
         }
 	}
+
+    public void FadeIn(float fadeTime)
+    {
+
+    }
 }
