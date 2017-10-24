@@ -8,6 +8,8 @@ public class TrashSc : MonoBehaviour {
 
     GameObject[] pickupObs;
     public GameObject playerObj;
+    public GameObject EarningsDisplay;
+    public GameObject DestroyedDisplayObject;
     public int objsRemaining;
     public Text objsDisplay;
     string objsText;
@@ -26,9 +28,12 @@ public class TrashSc : MonoBehaviour {
     int obsDestroyedLifetime;
     float fadeTimer;
     bool startFadeTimer;
+    public AudioSource thump;
+    public Slider clock;
 
-	// Use this for initialization
-	void Start () {
+
+    // Use this for initialization
+    void Start () {
         gameDays = 1;
         pickupObs = GameObject.FindGameObjectsWithTag("pickupObj");
         objsRemaining = pickupObs.Length;
@@ -38,9 +43,8 @@ public class TrashSc : MonoBehaviour {
         startPos = new Vector3(1.45f, 1.24f, 29.45f);
         startTimer = true;
         didFade = false;
-        fadeTimer = 5;
+        fadeTimer = 8;
         bool startFadeTimer = false;
-        
     }
 
     // Update is called once per frame
@@ -65,8 +69,8 @@ public class TrashSc : MonoBehaviour {
         else if (dayTimer <= 0)
         {
             StartCoroutine(Fading());
-            dayTimer = dayLength;
             startTimer = false;
+            dayTimer = dayLength;
         }
         
         if (didFade == true && fadeImg.color.a == 0)
@@ -79,6 +83,8 @@ public class TrashSc : MonoBehaviour {
         {
             fadeTimer -= Time.deltaTime;
         }
+
+        clock.value = Mathf.MoveTowards(clock.value, dayTimer, .15f); //clock code
     }
 
     private void OnTriggerEnter(Collider other)
@@ -92,12 +98,19 @@ public class TrashSc : MonoBehaviour {
             obsDestroyedLifetime++;
         }
     }
-
+    // yOu eArnEd $96
     IEnumerator Fading()
     {
-        destroyedDisplay.text = "Today you incinerated " + obsDestroyedDay + " objects\nyOu eArnEd $96";
+        EarningsDisplay.SetActive(false);
+        destroyedDisplay.text = "TOdAY you incinerated " + obsDestroyedDay + " ObJEcts";
         fadeAnim.SetBool("Fade", true);
+        DestroyedDisplayObject.SetActive(true);
         startFadeTimer = true;
+        yield return new WaitUntil(() => fadeTimer <= 7);
+        thump.Play();
+        yield return new WaitUntil(() => fadeImg.color.a == 1 && fadeTimer <= 3);
+        thump.Play();
+        EarningsDisplay.SetActive(true);        
         yield return new WaitUntil(() => fadeImg.color.a == 1 && fadeTimer <= 0);
         startFadeTimer = false;
         if (gameDays <= 5)
@@ -114,13 +127,15 @@ public class TrashSc : MonoBehaviour {
 
     private void Reset()
     {
-        playerObj.transform.position = startPos;
         gameDays++;
         dayDisplay.text = "Day " + gameDays;
+        thump.Play();
+        playerObj.transform.position = startPos;
         startTimer = true;
         fadeAnim.SetBool("FadeBack", true);
         fadeAnim.SetBool("Fade", false);
         didFade = true;
         obsDestroyedDay = 0;
+
     }
 }
