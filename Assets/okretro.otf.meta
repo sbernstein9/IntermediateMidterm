@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: e7e174d53beaa614ab399b36d9b8ecda
+timeCreated: 1508792200
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: O.K. Retro
+  fontNames:
+  - O.K. Retro
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

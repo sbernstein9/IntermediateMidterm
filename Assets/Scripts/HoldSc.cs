@@ -49,6 +49,11 @@ public class HoldSc : MonoBehaviour
                     {
                         Pickup(shootRayHit.transform.gameObject);
                     }
+                    else if (!pickupObj && shootRayHit.transform.gameObject.tag == "nudge")
+                    {
+                        shootRayHit.transform.GetComponent<Rigidbody>().AddForce(transform.forward * 1);
+                        Debug.Log("nudged");
+                    }
                 }
                 
             }
@@ -84,6 +89,7 @@ public class HoldSc : MonoBehaviour
                 pickupObj = null;
             }
         }
+        
     }
 
     private void Pickup(GameObject pickedUpObj)
