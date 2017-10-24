@@ -8,6 +8,6 @@ PhysicMaterial:
   m_Name: TrashWall
   dynamicFriction: 0.6
   staticFriction: 0.6
-  bounciness: 0.85
+  bounciness: 0.38
   frictionCombine: 0
   bounceCombine: 0

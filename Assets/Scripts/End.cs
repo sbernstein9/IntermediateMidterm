@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class End : MonoBehaviour {
 
+    public AudioSource end;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -11,6 +13,9 @@ public class End : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+	    if (Input.GetKeyDown(KeyCode.Space))
+        {
+            end.Play();
+        }
 	}
 }

@@ -29,6 +29,7 @@ public class TrashSc : MonoBehaviour {
     float fadeTimer;
     bool startFadeTimer;
     public AudioSource thump;
+    public AudioSource woosh;
     public Slider clock;
 
 
@@ -71,6 +72,7 @@ public class TrashSc : MonoBehaviour {
             StartCoroutine(Fading());
             startTimer = false;
             dayTimer = dayLength;
+            Debug.Log(gameDays);
         }
         
         if (didFade == true && fadeImg.color.a == 0)
@@ -85,6 +87,7 @@ public class TrashSc : MonoBehaviour {
         }
 
         clock.value = Mathf.MoveTowards(clock.value, dayTimer, .15f); //clock code
+        Debug.Log(fadeTimer);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -96,6 +99,7 @@ public class TrashSc : MonoBehaviour {
             objsRemaining--;
             obsDestroyedDay++;
             obsDestroyedLifetime++;
+            woosh.Play();
         }
     }
     // yOu eArnEd $96
@@ -105,10 +109,11 @@ public class TrashSc : MonoBehaviour {
         destroyedDisplay.text = "TOdAY you incinerated " + obsDestroyedDay + " ObJEcts";
         fadeAnim.SetBool("Fade", true);
         DestroyedDisplayObject.SetActive(true);
+        yield return new WaitUntil(() => fadeImg.color.a == 1);
         startFadeTimer = true;
-        yield return new WaitUntil(() => fadeTimer <= 7);
+        yield return new WaitUntil(() => fadeImg.color.a == 1 && fadeTimer <= 7);
         thump.Play();
-        yield return new WaitUntil(() => fadeImg.color.a == 1 && fadeTimer <= 3);
+        yield return new WaitUntil(() => fadeImg.color.a == 1 && fadeTimer <= 4);
         thump.Play();
         EarningsDisplay.SetActive(true);        
         yield return new WaitUntil(() => fadeImg.color.a == 1 && fadeTimer <= 0);
@@ -116,6 +121,7 @@ public class TrashSc : MonoBehaviour {
         if (gameDays <= 5)
         {
             Reset();
+            Debug.Log("reset");
         }
         else if (gameDays > 5)
         {
@@ -127,15 +133,24 @@ public class TrashSc : MonoBehaviour {
 
     private void Reset()
     {
-        gameDays++;
-        dayDisplay.text = "Day " + gameDays;
-        thump.Play();
-        playerObj.transform.position = startPos;
-        startTimer = true;
-        fadeAnim.SetBool("FadeBack", true);
-        fadeAnim.SetBool("Fade", false);
-        didFade = true;
-        obsDestroyedDay = 0;
+        if (gameDays < 5)
+        {
+            gameDays++;
+            dayDisplay.text = "Day " + gameDays;
+            thump.Play();
+            playerObj.transform.position = startPos;
+            startTimer = true;
+            fadeAnim.SetBool("FadeBack", true);
+            fadeAnim.SetBool("Fade", false);
+            didFade = true;
+            obsDestroyedDay = 0;
+            fadeTimer = 8;
+        }
+        else if (gameDays > 5)
+        {
+            SceneManager.LoadScene("End");
+
+        }
 
     }
 }
